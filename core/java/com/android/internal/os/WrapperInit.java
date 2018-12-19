@@ -99,11 +99,23 @@ public class WrapperInit {
     public static void execApplication(String invokeWith, String niceName,
             int targetSdkVersion, String instructionSet, FileDescriptor pipeFd,
             String[] args) {
-        StringBuilder command = new StringBuilder(invokeWith);
+      
+        StringBuilder command;
+	boolean isMilkomeda = false;
+	if (invokeWith.equals("milkomeda")) {
+	    isMilkomeda = true;
+	    command = new StringBuilder("");
+	} else {
+            command = new StringBuilder(invokeWith);
+	}
 
         final String appProcess;
         if (VMRuntime.is64BitInstructionSet(instructionSet)) {
-            appProcess = "/system/bin/app_process64";
+	    if (isMilkomeda) {
+            	appProcess = "/system/bin/app_process_milkomeda64";
+	    } else {
+                appProcess = "/system/bin/app_process64";
+	    }
         } else {
             appProcess = "/system/bin/app_process32";
         }

@@ -423,6 +423,13 @@ class FileDescriptorTable {
         continue;
       }
 
+      struct stat f_stat;
+      fstat(fd, &f_stat);
+      if (f_stat.st_mode == 4480) {
+        ALOGI("Ignore pipe created for child process.");
+        continue;
+      }
+
       FileDescriptorInfo* info = FileDescriptorInfo::createFromFd(fd);
       if (info == NULL) {
         if (closedir(d) == -1) {
@@ -455,6 +462,13 @@ class FileDescriptorTable {
     while ((e = readdir(d)) != NULL) {
       const int fd = ParseFd(e, dir_fd);
       if (fd == -1) {
+        continue;
+      }
+
+      struct stat f_stat;
+      fstat(fd, &f_stat);
+      if (f_stat.st_mode == 4480) {
+        ALOGI("Ignore pipe created for child process.");
         continue;
       }
 

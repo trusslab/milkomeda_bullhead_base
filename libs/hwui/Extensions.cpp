@@ -45,7 +45,6 @@ Extensions::Extensions() {
     mHas4BitStencil = extensions.has("GL_OES_stencil4");
     mHasUnpackSubImage = extensions.has("GL_EXT_unpack_subimage");
 
-    const char* version = (const char*) glGetString(GL_VERSION);
 
     // Section 6.1.5 of the OpenGL ES specification indicates the GL version
     // string strictly follows this format:
@@ -59,11 +58,9 @@ Extensions::Extensions() {
     // or more digits. The release number and vendor specific information are
     // optional."
 
-    if (sscanf(version, "OpenGL ES %d.%d", &mVersionMajor, &mVersionMinor) != 2) {
         // If we cannot parse the version number, assume OpenGL ES 2.0
-        mVersionMajor = 2;
-        mVersionMinor = 0;
-    }
+        mVersionMajor = 3;
+        mVersionMinor = 1;
 }
 
 }; // namespace uirenderer
